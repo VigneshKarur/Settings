@@ -1,0 +1,212 @@
+ <div >
+
+    <form [formGroup]="studentForm" (ngSubmit)="getFormData()" >
+      <div >
+       <div class="cnt">
+        <div><h1>Production Unit</h1></div>
+        <div style="margin-left: 60%;"><h1>Total</h1></div>
+       </div>
+       <div style="margin-left: 60%;">
+        <div class="cnt">
+          <div style="margin-top: 24px;margin-right: 20px;"><fa-icon [icon]="faPaste"  size="2x" style=" padding-right: 2%;"></fa-icon></div>
+          <div style="margin-top: 24px;margin-right: 20px;"><fa-icon [icon]="faCopy"  size="2x" style=" padding-right: 2%;"></fa-icon></div>
+          <div style="margin-top: 24px;margin-right: 20px;"><fa-icon [icon]="faUndo"  size="2x" style=" padding-right: 2%;"></fa-icon></div>
+          <div style="margin-top: 24px;margin-right: 20px;"><fa-icon [icon]="faTrash"  size="2x" style=" padding-right: 2%;"></fa-icon></div>
+         <div style="margin-top: 24px;"><fa-icon [icon]="faPlus" (click)="addStudent()" size="2x" style=" padding-right: 2%;"></fa-icon></div>
+         <div><button type="submit" class="btn btn-sm btn-success mt-4 ms-2 mb-5">Submit</button></div>
+        </div>
+       </div>
+      </div>
+  
+      <div *ngIf="studentListArray().length > 0" formArrayName="studentList">
+  
+        <div *ngFor="let student of studentListArray().controls; let i = index">
+  
+          <div [formGroupName]="i" >
+            
+            
+            <div class="container" style="margin: 0;">
+              
+              
+              <div class="row">
+              
+                <div class="col-sm">
+                    
+                   <div class="cnt"> 
+                  <div style="margin-top: 15px;"> 
+                    <fa-icon [icon]="faPlus" (click)="addNewSubject(i)" size="2x" style=" padding-right: 2%;"></fa-icon>
+                   </div>
+                   <div style="padding-right: 2%; margin-top:20px">
+                    <input type="checkbox" style="height:20px;width: 20px; " >
+                   </div>
+                  <div>
+                    <label for="Name">Name</label>
+                    <input type="text" style="height:20px;padding-right: 2%" formControlName="name" />
+                  </div>
+                </div>
+              </div>  
+                
+                <div class="col-sm">
+                  <div >
+                    <label for="Description">Description</label>
+                    <input type="text" style="height:20px;padding-right: 2%" formControlName="description" />
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div>
+                    <label for="DataSource ID">DataSource ID</label>
+                    <input type="text" style="height:20px;padding-right: 2%" formControlName="dataId" />
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div>
+                    <label for="Speed">Speed</label>
+                    <input type="text" style="height:20px;padding-right: 2%" formControlName="speed" />
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div>
+                    <label for="Technology">Technology</label>
+                    <input type="text" style="height:20px;padding-right: 2%" formControlName="technology" />
+                   </div>
+                </div>
+                <div class="col-sm">
+                  <div class="cnt">
+                  <div>
+                    <label for="Machine count">Machine count</label>
+                    <input type="text" style="height:20px;padding-right: 2%" formControlName="machineCount" />
+                  </div>
+                  <div style="margin-top: 15px;">
+                    <fa-icon [icon]="faTrash" (click)="removeStudent(i)" size="2x" style="padding-right: 2%; "></fa-icon>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+            
+         
+           
+            <div [formGroup]="subjectsFormGroup(i)">
+  
+              <div formArrayName="studentSubjectArray">
+  
+                <div *ngFor="let studentSub of subjectsArray(i).controls; let j = index;">
+  
+                  <div [formGroupName]="j">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm">
+                          <div class="cnt">
+                            <div>
+                            <label for="">Name</label>
+                    <input type="text"  formControlName="m_name" /></div>
+                          </div>
+                        </div>
+                        <div class="col-sm">
+                          <div class="cnt">
+                            <div>
+                            <label for="">Description</label>
+                    <input type="text"  formControlName="m_description" /></div>
+                          </div>
+                        </div>
+                        <div class="col-sm">
+                          <div class="cnt">
+                            <div><label for="">Data Source ID</label>
+                    <input type="text"  formControlName="m_dataId" /></div>
+                    <div style="margin-top: 15px;" ><fa-icon (click)="removeNewSubject(i,j)"[icon]="faTrash"  size="2x"></fa-icon></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    
+                    
+                    
+                  </div>
+                
+                </div>
+  
+              </div>
+  
+            </div>
+  
+            
+  
+          </div>
+  
+        </div>
+      </div>
+    </form>
+    
+   <form >
+    
+    <div *ngIf="!isLoading">
+    <div *ngFor="let d of data">
+    <div class="container" style="margin:0">
+      
+        
+         
+              
+      <div class="row">
+        
+        <div class="col-sm">
+          
+           <div class="cnt"> 
+            <div style="margin-top: 15px;">
+              <button>Add</button>
+            </div>
+           <div style="padding-right: 2%; margin-top:20px">
+            <input type="checkbox" style="height:20px;width: 20px; " >
+           </div>
+          <div>
+            <label for="Name">Name</label>
+            <input type="text" style="height:20px;padding-right: 2%"  [(ngModel)]="data[d.id-1].id" />
+          </div>
+        </div>
+      </div>  
+        
+        <div class="col-sm">
+          <div >
+            <label for="Description">Description</label>
+            <input type="text" style="height:20px;padding-right: 2%"  />
+          </div>
+        </div>
+        <div class="col-sm">
+          <div>
+            <label for="DataSource ID">DataSource ID</label>
+            <input type="text" style="height:20px;padding-right: 2%"  />
+          </div>
+        </div>
+        <div class="col-sm">
+          <div>
+            <label for="Speed">Speed</label>
+            <input type="text" style="height:20px;padding-right: 2%"  />
+          </div>
+        </div>
+        <div class="col-sm">
+          <div>
+            <label for="Technology">Technology</label>
+            <input type="text" style="height:20px;padding-right: 2%"  />
+           </div>
+        </div>
+        <div class="col-sm">
+          <div class="cnt">
+          <div>
+            <label for="Machine count">Machine count</label>
+            <input type="text" style="height:20px;padding-right: 2%"  />
+          </div>
+          <div style="margin-top: 15px;">
+            <button>Delete</button>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+    </div>
+
+    <div *ngIf="isLoading">Loading</div>
+    
+   </form>
+   <button (click)="submit()"></button>
+  </div>

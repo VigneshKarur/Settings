@@ -1,0 +1,10 @@
+ label {
+    display:block;
+}
+input{
+    width: 90%;
+}
+.cnt {
+   
+    display:flex;
+}
